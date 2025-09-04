@@ -1,0 +1,127 @@
+local UserInputService = game:GetService("UserInputService")
+
+-- 创建两个独立的ScreenGui
+local MainGui = Instance.new("ScreenGui")
+MainGui.Name = "MainGUI"
+MainGui.Parent = game.CoreGui
+MainGui.Enabled = true
+
+local ReopenGui = Instance.new("ScreenGui")
+ReopenGui.Name = "ReopenGUI"
+ReopenGui.Parent = game.CoreGui
+ReopenGui.Enabled = false -- 初始隐藏重新显示按钮
+
+-- 主界面美化
+local Frame = Instance.new("Frame")
+Frame.Name = "frame"
+Frame.Parent = MainGui
+Frame.BackgroundColor3 = Color3.fromRGB(45, 45, 45) -- 深灰色背景
+Frame.BackgroundTransparency = 0.2 -- 半透明效果
+Frame.Position = UDim2.new(0.326148063, 0, 0.29880476, 0)
+Frame.Size = UDim2.new(0, 400, 0, 350)
+Frame.Active = true
+Frame.Draggable = true
+
+-- 添加圆角效果
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 8)
+corner.Parent = Frame
+
+-- 添加阴影效果
+local shadow = Instance.new("UIStroke")
+shadow.Color = Color3.fromRGB(100, 100, 100)
+shadow.Thickness = 2
+shadow.Transparency = 0.7
+shadow.Parent = Frame
+
+-- 关闭按钮美化
+local closeButton = Instance.new("TextButton")
+closeButton.Name = "CloseButton"
+closeButton.Parent = Frame
+closeButton.BackgroundColor3 = Color3.fromRGB(220, 60, 60) -- 更柔和的红色
+closeButton.Position = UDim2.new(1, -30, 0, 10) -- 稍微调整位置
+closeButton.Size = UDim2.new(0, 25, 0, 25)
+closeButton.Text = "×" -- 使用更美观的关闭符号
+closeButton.Font = Enum.Font.GothamBold
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeButton.TextSize = 18
+
+-- 关闭按钮圆角
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(1, 0) -- 圆形按钮
+closeCorner.Parent = closeButton
+
+-- 关闭按钮悬停效果
+closeButton.MouseEnter:Connect(function()
+    closeButton.BackgroundColor3 = Color3.fromRGB(200, 40, 40)
+end)
+
+closeButton.MouseLeave:Connect(function()
+    closeButton.BackgroundColor3 = Color3.fromRGB(220, 60, 60)
+end)
+
+-- 重新显示按钮美化
+local reopenButton = Instance.new("TextButton")
+reopenButton.Name = "ReopenButton"
+reopenButton.Parent = ReopenGui
+reopenButton.BackgroundColor3 = Color3.fromRGB(70, 150, 70) -- 更柔和的绿色
+reopenButton.Position = UDim2.new(0, 10, 0, 10)
+reopenButton.Size = UDim2.new(0, 100, 0, 35) -- 稍微增大尺寸
+reopenButton.Text = "打开"
+reopenButton.Font = Enum.Font.GothamMedium
+reopenButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+reopenButton.TextSize = 16
+
+-- 重新显示按钮圆角
+local reopenCorner = Instance.new("UICorner")
+reopenCorner.CornerRadius = UDim.new(0, 6)
+reopenCorner.Parent = reopenButton
+
+-- 重新显示按钮阴影
+local reopenShadow = Instance.new("UIStroke")
+reopenShadow.Color = Color3.fromRGB(40, 100, 40)
+reopenShadow.Thickness = 2
+reopenShadow.Parent = reopenButton
+
+-- 重新显示按钮悬停效果
+reopenButton.MouseEnter:Connect(function()
+    reopenButton.BackgroundColor3 = Color3.fromRGB(60, 130, 60)
+end)
+
+reopenButton.MouseLeave:Connect(function()
+    reopenButton.BackgroundColor3 = Color3.fromRGB(70, 150, 70)
+end)
+
+-- 添加标题文本（纯装饰）
+local title = Instance.new("TextLabel")
+title.Name = "Title"
+title.Parent = Frame
+title.BackgroundTransparency = 1
+title.Position = UDim2.new(0, 15, 0, 15)
+title.Size = UDim2.new(1, -30, 0, 30)
+title.Text = "棠X灵白脚本"
+title.Font = Enum.Font.GothamBold
+title.TextColor3 = Color3.fromRGB(220, 220, 220)
+title.TextSize = 20
+title.TextXAlignment = Enum.TextXAlignment.Left
+
+-- 添加装饰分隔线
+local divider = Instance.new("Frame")
+divider.Name = "Divider"
+divider.Parent = Frame
+divider.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+divider.BackgroundTransparency = 0.7
+divider.Position = UDim2.new(0, 15, 0, 50)
+divider.Size = UDim2.new(1, -30, 0, 1)
+
+-- 切换GUI可见性的函数
+local function toggleGUI()
+    MainGui.Enabled = not MainGui.Enabled
+    ReopenGui.Enabled = not MainGui.Enabled
+end
+
+-- 关闭按钮点击事件
+closeButton.MouseButton1Click:Connect(toggleGUI)
+
+-- 重新显示按钮点击事件
+reopenButton.MouseButton1Click:Connect(toggleGUI)
